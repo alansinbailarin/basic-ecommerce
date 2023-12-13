@@ -15,12 +15,27 @@
               class="w-full h-32 object-contain"
             />
           </picture>
-          <h2 class="text-gray-700 font-semibold text-sm mt-4">
-            {{ product.title }}
+
+          <h2 class="text-gray-700 font-semibold mt-4">
+            {{ truncateText.truncateText(product.title, 40) }}
           </h2>
-          <p class="text-gray-500 text-sm mt-2 flex-wrap">
-            {{ truncateText.truncateText(product.description, 120) }}
+          <p class="text-gray-500 text-sm flex-wrap">
+            {{ truncateText.truncateText(product.description, 70) }}
           </p>
+          <h1 class="mt-2 font-bold text-lg">{{ product.price }}$</h1>
+          <div class="flex items-center gap-1 mt-1 text-blue-500">
+            <template
+              v-for="(icon, index) in starsIcon.getStarsIcon(
+                product.rating.rate
+              )"
+              :key="index"
+            >
+              <div v-html="icon"></div>
+            </template>
+            <p class="mt-0.5 text-gray-500 ml-0.5 font-light">
+              {{ product.rating.rate }} ({{ product.rating.count }})
+            </p>
+          </div>
         </Card>
       </div>
     </div>
@@ -31,6 +46,7 @@
 import { ref, onMounted } from "vue";
 import ProductService from "@/services/ProductService";
 import { useTruncateText } from "../composables/useTruncateText";
+import { useStarsIcon } from "../composables/useStarsIcon";
 import Card from "@/ui/Card.vue";
 import { tailChase } from "ldrs";
 
@@ -40,6 +56,7 @@ const products = ref([]);
 const categories = ref([]);
 const loading = ref(true);
 const truncateText = useTruncateText();
+const starsIcon = useStarsIcon();
 
 onMounted(async () => {
   try {
