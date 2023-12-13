@@ -16,13 +16,15 @@
             />
           </picture>
 
-          <h2 class="text-gray-700 font-semibold mt-4">
+          <h2 class="text-gray-800 text-lg font-semibold mt-4">
             {{ truncateText.truncateText(product.title, 40) }}
           </h2>
           <p class="text-gray-500 text-sm flex-wrap">
             {{ truncateText.truncateText(product.description, 70) }}
           </p>
-          <h1 class="mt-2 font-bold text-lg">{{ product.price }}$</h1>
+          <h1 class="mt-2 text-gray-800 font-bold text-lg">
+            {{ product.price }}$
+          </h1>
           <div class="flex items-center gap-1 mt-1 text-blue-500">
             <template
               v-for="(icon, index) in starsIcon.getStarsIcon(
